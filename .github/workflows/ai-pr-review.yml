@@ -1,0 +1,39 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Fetch PR Changes
+        run: git diff origin/main...HEAD > pr_changes.diff
+
+      - name: Review PR with OpenAI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          RESPONSE=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "gpt-4",
+              "messages": [
+                {"role": "system", "content": "You are a senior software engineer reviewing pull requests for a TypeScript/Node.js project. Analyze the changes and suggest improvements."},
+                {"role": "user", "content": "Please review this PR and provide suggestions:\n\n'"$(cat pr_changes.diff)"'"}
+              ]
+            }')
+
+          echo "### AI Review Feedback" > review_comment.md
+          echo "$RESPONSE" | jq -r '.choices[0].message.content' >> review_comment.md
+
+      - name: Post AI Review Comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-path: review_comment.md
