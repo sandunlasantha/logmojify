@@ -1,7 +1,7 @@
 # 🚀 **LogMojiFy - The Smart Emoji Logger** 🔥
 
 [![npm version](https://img.shields.io/npm/v/logmojify.svg)](https://www.npmjs.com/package/logmojify)  
-[![License](https://img.shields.io/github/license/sandunlasntha/logmojify.svg)](https://github.com/sandunlasntha/logmojify/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/sandunlasntha/logmojify.svg)](https://github.com/sandunlasantha/logmojify/blob/main/LICENSE)
 
 ---
 
