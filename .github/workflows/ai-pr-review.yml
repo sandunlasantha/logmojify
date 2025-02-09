@@ -34,20 +34,30 @@ jobs:
         run: |
           DIFF_CONTENT=$(cat pr_changes.diff)
 
-          RESPONSE=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
-            -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg content "$DIFF_CONTENT" '{
-              "model": "gpt-4",
-              "messages": [
-                {"role": "system", "content": "You are a senior software engineer reviewing a pull request. Your goal is to analyze the code changes holistically and provide a thoughtful review. Identify potential issues, suggest improvements, and highlight any best practices. Your feedback should be structured, actionable, and professional."},
-                {"role": "user", "content": "Please review this pull request and provide an in-depth, well-structured code review. Here are the changes:\n\n" + $content}
+          # Handle cases where diff is empty
+          if [ -z "$DIFF_CONTENT" ]; then
+            echo "LGTM ✅" > review_comment.md
+            exit 0
+          fi
+
+          RESPONSE=$(jq -n \
+            --arg model "gpt-4" \
+            --arg system_msg "You are a senior software engineer reviewing a pull request. Provide structured and actionable feedback." \
+            --arg user_msg "Please review this pull request and provide a structured review:\n\n$DIFF_CONTENT" \
+            '{
+              model: $model,
+              messages: [
+                {role: "system", content: $system_msg},
+                {role: "user", content: $user_msg}
               ]
-            }')")
+            }' | curl -s -X POST "https://api.openai.com/v1/chat/completions" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d @-)
 
           REVIEW_TEXT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
 
-          # Standardized handling: If AI response is empty, post LGTM
+          # Ensure AI response is meaningful; fallback to LGTM if empty
           echo "### AI Review Feedback" > review_comment.md
           if [ -z "$REVIEW_TEXT" ] || [ "$REVIEW_TEXT" == "null" ]; then
             echo "LGTM ✅" >> review_comment.md
