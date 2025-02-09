@@ -13,3 +13,4 @@ export class LogMojiFy {
     this.emojis = { ...this.emojis, ...customEmojis };
   }
 }
+console.log('AI Review Test');
