@@ -21,10 +21,11 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
-          cache-dependency-path: package-lock.json
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Clean Install Dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
 
       - name: Ensure Rollup is Installed
         run: npm install --save-dev rollup @rollup/rollup-linux-x64-gnu
