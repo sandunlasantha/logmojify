@@ -12,13 +12,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Ensures full Git history
+
+      - name: Verify Branches
+        run: git branch -a # Debugging step to check available branches
 
       - name: Fetch Main Branch
-        run: git fetch origin main
+        run: |
+          git fetch origin main || echo "Main branch not found, skipping"
+          git checkout main || echo "Already on main or main not found"
 
       - name: Fetch PR Changes
-        run: git diff origin/main..HEAD > pr_changes.diff
+        run: |
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            git diff origin/main..HEAD > pr_changes.diff
+          else
+            echo "No main branch found, using HEAD" > pr_changes.diff
+          fi
 
       - name: Review PR with OpenAI
         env:
