@@ -22,8 +22,13 @@ jobs:
           node-version: 18
           cache: "npm"
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Clean Install Dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+
+      - name: Verify Rollup Install
+        run: npm list rollup || npm install --save-dev rollup
 
       - name: Run Linting
         run: npm run lint
