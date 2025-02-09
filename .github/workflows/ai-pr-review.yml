@@ -26,13 +26,23 @@ jobs:
       - name: Fetch PR Changes
         run: |
           BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git diff ${BASE_BRANCH}...HEAD > pr_changes.diff
+          echo "Generating diff from $BASE_BRANCH to HEAD"
+          git diff --unified=0 ${BASE_BRANCH}...HEAD > pr_changes.diff
+
+          echo "---- Generated Diff ----"
+          cat pr_changes.diff
+          echo "------------------------"
 
       - name: Review PR with OpenAI
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           DIFF_CONTENT=$(cat pr_changes.diff)
+
+          # Debug: Print the diff content before sending to OpenAI
+          echo "---- DIFF CONTENT BEFORE SENDING ----"
+          echo "$DIFF_CONTENT"
+          echo "-------------------------------------"
 
           # Handle cases where diff is empty
           if [ -z "$DIFF_CONTENT" ]; then
