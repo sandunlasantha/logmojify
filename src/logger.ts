@@ -14,3 +14,4 @@ export class LogMojiFy {
   }
 }
 console.log('AI Review Test');
+console.log('AI Review Test');
