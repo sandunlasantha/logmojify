@@ -11,9 +11,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch Main Branch
+        run: git fetch origin main
 
       - name: Fetch PR Changes
-        run: git diff origin/main...HEAD > pr_changes.diff
+        run: git diff origin/main..HEAD > pr_changes.diff
 
       - name: Review PR with OpenAI
         env:
