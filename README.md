@@ -166,13 +166,13 @@ Contributions are welcome! Follow these steps:
 
 ## 📝 **License**
 
-MIT License © 2025 [sandunlasntha](https://github.com/sandunlasntha)
+MIT License © 2025 [sandunlasntha](https://github.com/sandunlasantha)
 
 ---
 
 🔹 **Stay Updated!**  
 📦 [View on npm](https://www.npmjs.com/package/logmojify)  
-🌟 [Star on GitHub](https://github.com/sandunlasntha/logmojify)
+🌟 [Star on GitHub](https://github.com/sandunlasantha/logmojify)
 
 ---
 
