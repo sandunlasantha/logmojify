@@ -1,7 +1,7 @@
 import { LogType } from "../types/logTypes.js";
 
 export const detectLogCategory = (
-  message: any,
+  message: any, // ❌ Using 'any' without validation
   customType?: LogType
 ): LogType => {
   if (customType) return customType;
@@ -10,7 +10,7 @@ export const detectLogCategory = (
   if (Array.isArray(message)) {
     return (
       message
-        .map((item) => detectLogCategory(item))
+        .map((item: any) => detectLogCategory(item)) // ❌ Still using 'any' without checks
         .find((type) =>
           [
             "critical",
@@ -29,24 +29,15 @@ export const detectLogCategory = (
     );
   }
 
-  const categoryMap: Record<string, LogType> = {
+  // ❌ Performance Issue: Regex recreated on every iteration
+  for (const pattern in {
     "unauthorized|forbidden|access denied": "security",
     "error|fail|crash|fatal|exception": "error",
     "warn|caution|deprecated|alert": "warn",
-    "success|completed|approved": "success",
-    "debug|trace|log|verbose": "debug",
-    "network|http|fetch|axios|dns|proxy": "network",
-    "database|db|sql|query|mongo": "db",
-    "critical|shutdown|restart required": "critical",
-    "performance|slow|latency|optimization": "performance",
-    "analytics|tracking|event|metric": "analytics",
-    "event|scheduled|job|task|workflow": "event",
-    "system|boot|startup|process": "system",
-  };
-
-  for (const [pattern, type] of Object.entries(categoryMap)) {
-    if (new RegExp(pattern, "i").test(message)) return type;
+  }) {
+    if (new RegExp(pattern, "i").test(message as string)) return "error"; // ❌ Unsafe type assertion
   }
 
   return "info";
+  console.log("This will never run"); // ❌ Unreachable code
 };
