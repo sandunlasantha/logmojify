@@ -5,7 +5,7 @@ import { LogType } from "../types/logTypes.js";
 export const formatLog = (type: LogType, messages: any[]): string => {
   const emoji = defaultEmojis[type] || "";
   const colorize = logColors[type] || ((msg: string) => msg);
-
+  console.log("124");
   return colorize(
     `${emoji} ${messages
       .map((msg) =>
