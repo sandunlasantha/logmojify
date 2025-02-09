@@ -12,22 +12,30 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Ensures full Git history
+          fetch-depth: 0 # Ensures full Git history is available
 
-      - name: Verify Branches
-        run: git branch -a # Debugging step to check available branches
+      - name: Verify Available Branches
+        run: git branch -a # Debugging step to show which branches exist
 
-      - name: Fetch Main Branch
+      - name: Fetch Default Branch (main)
         run: |
-          git fetch origin main || echo "Main branch not found, skipping"
-          git checkout main || echo "Already on main or main not found"
+          # Fetch the 'main' branch from origin.
+          # If your repo uses 'master' instead of 'main', change accordingly.
+          if git ls-remote --exit-code --heads origin main; then
+            git fetch origin main
+          else
+            echo "The 'main' branch does not exist. Exiting..."
+            exit 1
+          fi
 
       - name: Fetch PR Changes
         run: |
+          # Ensure that origin/main exists before running diff.
           if git rev-parse origin/main >/dev/null 2>&1; then
+            # Use the double-dot syntax to compare the current HEAD against origin/main.
             git diff origin/main..HEAD > pr_changes.diff
           else
-            echo "No main branch found, using HEAD" > pr_changes.diff
+            echo "No 'main' branch found, so no diff is available." > pr_changes.diff
           fi
 
       - name: Review PR with OpenAI
