@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions:
+  pull-requests: write # Ensures GITHUB_TOKEN can comment on PRs
+
 jobs:
   ai-review:
     runs-on: ubuntu-latest
@@ -11,9 +14,31 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensures full Git history is available
+
+      - name: Verify Available Branches
+        run: git branch -a # Debugging step to show which branches exist
+
+      - name: Fetch PR Base Branch
+        run: |
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "Fetching base branch: ${BASE_BRANCH}"
+          if git ls-remote --exit-code --heads origin ${BASE_BRANCH}; then
+            git fetch origin ${BASE_BRANCH}:${BASE_BRANCH}
+          else
+            echo "The base branch '${BASE_BRANCH}' does not exist. Exiting..."
+            exit 1
+          fi
 
       - name: Fetch PR Changes
-        run: git diff origin/main...HEAD > pr_changes.diff
+        run: |
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          if git rev-parse ${BASE_BRANCH} >/dev/null 2>&1; then
+            git diff ${BASE_BRANCH}...HEAD > pr_changes.diff
+          else
+            echo "No base branch found, using HEAD" > pr_changes.diff
+          fi
 
       - name: Review PR with OpenAI
         env:
@@ -34,6 +59,8 @@ jobs:
           echo "$RESPONSE" | jq -r '.choices[0].message.content' >> review_comment.md
 
       - name: Post AI Review Comment
+        if: github.event.pull_request.head.repo.full_name == github.repository # Prevents commenting on forks
         uses: mshick/add-pr-comment@v2
         with:
           message-path: review_comment.md
+          repo-token: ${{ secrets.GITHUB_TOKEN }} # Uses GitHub's built-in token
