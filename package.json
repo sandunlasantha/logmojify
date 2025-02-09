@@ -16,9 +16,9 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts'",
-    "prepare": "npm run build",
     "prepublishOnly": "npm run build",
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky install"
   },
   "dependencies": {
     "chalk": "^5.2.0"
@@ -28,6 +28,8 @@
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
     "eslint": "^9.20.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "typescript": "^5.0.0",
     "vitest": "^3.0.5"
   },
@@ -46,5 +48,8 @@
   "license": "MIT",
   "engines": {
     "node": ">=16"
+  },
+  "lint-staged": {
+    "src/**/*.ts": "eslint --fix"
   }
 }
