@@ -27,8 +27,8 @@ jobs:
           rm -rf node_modules package-lock.json
           npm install --legacy-peer-deps
 
-      - name: Verify Rollup Install
-        run: npm list rollup || npm install --save-dev rollup
+      - name: Ensure Rollup is Installed
+        run: npm install --save-dev rollup @rollup/rollup-linux-x64-gnu
 
       - name: Run Linting
         run: npm run lint
