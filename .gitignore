@@ -22,7 +22,6 @@ Thumbs.db
 
 # ⚡ Test & Logs
 *.log
-tests/
 
 # ⚡ NPM Specific
 .npmrc
