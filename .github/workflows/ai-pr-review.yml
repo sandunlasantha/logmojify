@@ -50,27 +50,30 @@ jobs:
             exit 0
           fi
 
-          RESPONSE=$(jq -n \
-            --arg model "gpt-4" \
-            --arg system_msg "You are a senior software engineer reviewing a pull request. Provide structured and actionable feedback." \
-            --arg user_msg "Please review this pull request and provide a structured review:\n\n$DIFF_CONTENT" \
+          RESPONSE=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg model "gpt-4" \
+            --arg system_msg "You are a senior software engineer reviewing a pull request. Your goal is to analyze the code changes, identify issues, suggest improvements, and provide structured feedback. If there are no issues, state explicitly why the changes are good." \
+            --arg user_msg "Here is a Git diff from a pull request. Provide a detailed review, highlighting any improvements needed:\n\n$DIFF_CONTENT" \
             '{
               model: $model,
               messages: [
                 {role: "system", content: $system_msg},
                 {role: "user", content: $user_msg}
               ]
-            }' | curl -s -X POST "https://api.openai.com/v1/chat/completions" \
-              -H "Authorization: Bearer $OPENAI_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d @-)
+            }')")
+
+          echo "---- RAW OPENAI RESPONSE ----"
+          echo "$RESPONSE"
+          echo "----------------------------"
 
           REVIEW_TEXT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
 
-          # Ensure AI response is meaningful; fallback to LGTM if empty
+          # Ensure AI response is meaningful; fallback to "LGTM" if response is still empty
           echo "### AI Review Feedback" > review_comment.md
           if [ -z "$REVIEW_TEXT" ] || [ "$REVIEW_TEXT" == "null" ]; then
-            echo "LGTM ✅" >> review_comment.md
+            echo "❗ AI Review Failed: No meaningful feedback generated. Manually review the PR." >> review_comment.md
           else
             echo "$REVIEW_TEXT" >> review_comment.md
           fi
