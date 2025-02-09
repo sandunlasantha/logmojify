@@ -1,0 +1,48 @@
+{
+  "name": "logmojify",
+  "version": "1.0.0",
+  "description": "A customizable emoji-based logger for Node.js applications",
+  "main": "dist/index.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "eslint": "^9.20.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/logmojify.git"
+  },
+  "keywords": [
+    "logging",
+    "emoji",
+    "console",
+    "logmojify",
+    "typescript"
+  ],
+  "author": "Sandun Lasantha",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  }
+}

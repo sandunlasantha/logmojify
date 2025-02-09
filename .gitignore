@@ -1,0 +1,35 @@
+# ⚡ Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ⚡ Build & Compiled Files
+dist/
+coverage/
+
+# ⚡ TypeScript Build Files
+*.tsbuildinfo
+
+# ⚡ Editor & System Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ⚡ Test & Logs
+*.log
+tests/
+
+# ⚡ NPM Specific
+.npmrc
+.npmignore
+
+# ⚡ Ignore local environment files
+.env
+.env.local
+.env.*.local
