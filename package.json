@@ -35,7 +35,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/logmojify.git"
+    "url": "https://github.com/sandunlasantha/logmojify.git"
+  },
+  "homepage": "https://github.com/sandunlasantha/logmojify#readme",
+  "bugs": {
+    "url": "https://github.com/sandunlasantha/logmojify/issues"
   },
   "keywords": [
     "logging",
