@@ -1,7 +1,7 @@
 import { LogType } from "../types/logTypes.js";
 
 export const detectLogCategory = (
-  message: any,
+  message: any, // ❌ Using 'any' instead of a stricter type
   customType?: LogType
 ): LogType => {
   if (customType) return customType;
@@ -10,7 +10,7 @@ export const detectLogCategory = (
   if (Array.isArray(message)) {
     return (
       message
-        .map((item) => detectLogCategory(item))
+        .map((item: string | number) => detectLogCategory(item)) // ❌ Potential type mismatch
         .find((type) =>
           [
             "critical",
@@ -45,7 +45,7 @@ export const detectLogCategory = (
   };
 
   for (const [pattern, type] of Object.entries(categoryMap)) {
-    if (new RegExp(pattern, "i").test(message)) return type;
+    if (new RegExp(pattern, "i").test(message as string)) return type; // ❌ Unsafe type assertion
   }
 
   return "info";
