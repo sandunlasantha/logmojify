@@ -1,6 +1,6 @@
 {
   "name": "logmojify",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A customizable emoji-based logger for Node.js applications",
   "main": "dist/index.js",
   "type": "module",
