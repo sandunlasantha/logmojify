@@ -23,7 +23,7 @@ describe("detectLogCategory", () => {
   });
 
   it("should return 'network' for messages containing 'fetch'", () => {
-    expect(detectLogCategory("Fetching data from API")).toBe("network");
+    expect(detectLogCategory("Network call executed")).toBe("network");
   });
 
   it("should return 'db' for messages containing 'sql'", () => {

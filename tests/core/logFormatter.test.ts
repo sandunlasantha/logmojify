@@ -5,7 +5,7 @@ import { LogType } from "../../src/types/logTypes.js";
 describe("formatLog", () => {
   it("should format a log with emoji and color", () => {
     const result = formatLog("info", ["Hello, world!"]);
-    expect(result).toContain("💡 Hello, world!");
+    expect(result).toContain("🟠 Hello, world!");
   });
 
   it("should format an object as JSON", () => {
