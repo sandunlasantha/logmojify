@@ -1,7 +1,7 @@
 # 🚀 **LogMojiFy - The Smart Emoji Logger** 🔥
 
 [![npm version](https://img.shields.io/npm/v/logmojify.svg)](https://www.npmjs.com/package/logmojify)  
-[![License](https://img.shields.io/github/license/sandunlasntha/logmojify.svg)](https://github.com/sandunlasantha/logmojify/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/sandunlasantha/logmojify.svg)](https://github.com/sandunlasantha/logmojify/blob/main/LICENSE)
 
 ---
 
@@ -30,7 +30,7 @@ To enable `logmojify` globally (so it modifies `console.log` everywhere), import
 | -------------------------- | ------------------------------------------ |
 | **Node.js (Backend)**      | `index.ts` or `server.ts`                  |
 | **React (Vite / CRA)**     | `src/main.tsx` or `src/index.tsx`          |
-| **Next.js**                | `pages/_app.tsx` or `app/layout.tsx`       |
+| **Next.js**                | `app/layout.tsx` or `pages/_app.tsx`       |
 | **Vue.js**                 | `main.js` or `main.ts`                     |
 | **Global Config Approach** | `src/config.ts`, then import in `index.ts` |
 
@@ -38,7 +38,7 @@ To enable `logmojify` globally (so it modifies `console.log` everywhere), import
 
 ```ts
 // src/main.tsx (React) or index.ts (Node.js)
-import "logmojify"; // This enables automatic log enhancements globally
+import "logmojify"; // Enables automatic log enhancements globally
 ```
 
 🚀 **After this, all `console.log` statements will be enhanced everywhere.**
@@ -64,16 +64,16 @@ console.error("Something went wrong!"); // 🔥 Something went wrong!
 
 ## 🤖 **Automatic Log Categorization**
 
-LogMojiFy uses **built-in intelligence** to determine the **most relevant category** based on keywords in your logs.
+LogMojiFy **automatically detects the log type** based on keywords in your logs.
 
 | Example Log Message                          | Categorized As | Emoji |
 | -------------------------------------------- | -------------- | ----- |
-| `"Database connection established!"`         | Database       | 🗃️    |
+| `"Database connection established!"`         | Database       | 💾    |
 | `"Slow response detected"`                   | Performance    | ⚡    |
-| `"Unauthorized access attempt"`              | Security       | 🛡️    |
-| `"Fetching API data"`                        | Network        | 📡    |
-| `"User clicked the checkout button"`         | User Action    | 🕹️    |
-| `"Payment of $49.99 completed successfully"` | Transaction    | 💳    |
+| `"Unauthorized access attempt"`              | Security       | 🔒    |
+| `"Fetching API data"`                        | Network        | 🌐    |
+| `"User clicked the checkout button"`         | User Action    | 🖱️    |
+| `"Payment of $49.99 completed successfully"` | Transaction    | 💰    |
 
 ✅ **No manual categorization needed—LogMojiFy detects them for you!**
 
@@ -98,28 +98,28 @@ Now, logs will use **your custom emojis** instead of the defaults.
 
 ## 📌 **Default Log Categories & Emojis**
 
-| Log Type      | Emoji | Description                                |
-| ------------- | ----- | ------------------------------------------ |
-| `info`        | 💡    | General information logs                   |
-| `warn`        | ⚠️    | Warnings that require attention            |
-| `error`       | ❌    | Errors & failures                          |
-| `debug`       | 🔍    | Debugging information                      |
-| `success`     | 🎯    | Success messages                           |
-| `network`     | 📡    | Network-related logs (API calls, requests) |
-| `db`          | 🗃️    | Database operations                        |
-| `critical`    | 🚨    | Critical issues requiring urgent action    |
-| `security`    | 🛡️    | Security-related events                    |
-| `performance` | ⚡    | Performance optimizations & latency issues |
-| `analytics`   | 📈    | Tracking, metrics, and analytics events    |
-| `event`       | 🎊    | Event-driven logs (tasks, jobs)            |
-| `user-action` | 🕹️    | User interactions & UI events              |
-| `system`      | 🖥️    | System & process logs                      |
-| `audit`       | 📜    | Compliance and audit logs                  |
-| `config`      | ⚙️    | Configuration changes                      |
-| `testing`     | 🧪    | Logs related to testing & debugging        |
-| `ai`          | 🤖    | AI/ML-related logs                         |
-| `transaction` | 💳    | Payment & transaction logs                 |
-| `file`        | 📁    | File operations (upload/download)          |
+| Log Type      | Emoji | Description                                      |
+| ------------- | ----- | ------------------------------------------------ |
+| `info`        | 🟠    | General information logs (Now orange background) |
+| `warn`        | ⚠️    | Warnings that require attention                  |
+| `error`       | ❌    | Errors & failures                                |
+| `debug`       | 🛠️    | Debugging information                            |
+| `success`     | ✅    | Success messages                                 |
+| `network`     | 🌐    | Network-related logs (API calls, requests)       |
+| `db`          | 💾    | Database operations                              |
+| `critical`    | 🔥    | Critical issues requiring urgent action          |
+| `security`    | 🔒    | Security-related events                          |
+| `performance` | ⚡    | Performance optimizations & latency issues       |
+| `analytics`   | 📊    | Tracking, metrics, and analytics events          |
+| `event`       | 📅    | Event-driven logs (tasks, jobs)                  |
+| `user-action` | 🖱️    | User interactions & UI events                    |
+| `system`      | 🖥️    | System & process logs                            |
+| `audit`       | 📝    | Compliance and audit logs                        |
+| `config`      | 🔧    | Configuration changes                            |
+| `testing`     | 🚀    | Logs related to testing & debugging              |
+| `ai`          | 🧠    | AI/ML-related logs                               |
+| `transaction` | 💰    | Payment & transaction logs                       |
+| `file`        | 📄    | File operations (upload/download)                |
 
 ---
 
@@ -166,7 +166,7 @@ Contributions are welcome! Follow these steps:
 
 ## 📝 **License**
 
-MIT License © 2025 [sandunlasntha](https://github.com/sandunlasantha)
+MIT License © 2025 [sandunlasantha](https://github.com/sandunlasantha)
 
 ---
 
